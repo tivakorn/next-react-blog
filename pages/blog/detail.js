@@ -1,18 +1,38 @@
 import React, { Component } from 'react'
 import Layout from '../../components/Layout'
+import NotFound from '../../components/error/NotFound'
 import axios from 'axios'
+import db from '../../resources/data/db.json'
 
 class Detail extends Component {
 
+    // static async getInitialProps({ query }) {
+    //     let result = null
+    //     const res = await axios.get(`http://localhost:3001/blogs/${query.id}`);
+    //     if (res) {
+    //         result = res.data
+    //     }
+
+    //     return {
+    //         blog: result
+    //     };
+
+    // }
     static async getInitialProps({ query }) {
-        const res = await axios.get(`http://localhost:3001/blogs/${query.id}`);
-        return { blog: res.data };
+        let blog = null
+        const result = db.filter((dataBlog) => {
+            return dataBlog.id === parseInt(query.id)
+        })
+        blog = result.length >  0 ? result : null
+        return { blog }
     }
 
     render() {
-        const { blog } = this.props
+        let { blog } = this.props
+        
         return (
             <Layout>
+                { status ? < NotFound /> : ( 
                 <div className="container">
                     <h1 className="mt-4 mb-4 title">{blog.subject}</h1>
                     <div className="row">
@@ -28,7 +48,8 @@ class Detail extends Component {
                             </h6>
                         </div>
                     </div>
-                </div>
+                </div> 
+                 ) }
             </Layout>
         )
     }

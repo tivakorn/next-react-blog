@@ -15,17 +15,21 @@ class Index extends Component {
             blogs.map(blog => {
                 return (
                     <div key={blog.id} className="col-6 mb-4">
-                        <img src={blog.thumbnail} className="img-fluid" style={{ height: 300, width: 800 }} />
-                        <Link href={'/blog/detail?id=' + blog.id}>{blog.subject}</Link>
-                        <hr />
-                        <p className="text-justify">{blog.intro}</p>
+                        <Link href={'/blog/detail?id=' + blog.id}>
+                            <div >
+                                <img src={blog.thumbnail} className="img-fluid" style={{ height: 300, width: 800 }} />
+                                <h3>{blog.subject}</h3>
+                                <hr />
+                                <p className="text-justify">{blog.intro}</p>
+                            </div>
+                        </Link>
                     </div>
                 )
             })
         )
     }
+    
     render() {
-        console.log(this.props.blogs)
         return (
             <Layout>
                 <div className='container'>
